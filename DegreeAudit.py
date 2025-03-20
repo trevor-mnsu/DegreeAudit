@@ -86,13 +86,12 @@ class Degree_Audit:
             if requirement.get_grade() in ['A','B','C']:
                 counter +=1
         return (counter/num_of_requirements)*100
+    def __str__(self):
+        return f"GPA: {self.get_gpa()}\n{self.percent_complete():.2f}% Requirements Complete"   
 
 mnsu_Student = Student("Trevor", "Cloutier", "012345678910")
 mnsu_Student.declare_major(Computer_Science())
 mnsu_Student.major.set_requirement_grade("Intro To Programming", 'B')
 mnsu_Student.major.set_requirement_grade("Data Structures", 'C')
-gpa = Degree_Audit(mnsu_Student).get_gpa()
-percent_complete = Degree_Audit(mnsu_Student).percent_complete()
 print(mnsu_Student)
-print(gpa)
-print(percent_complete)
+print(Degree_Audit(mnsu_Student))
