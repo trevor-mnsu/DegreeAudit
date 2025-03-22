@@ -3,15 +3,15 @@ class Requirement:
     def __init__(self, requirement_name: str):
         self.requirement_name = requirement_name
         self.grade = "U"
-        self._has_passed = False
+        self.has_passed = False
     def get_grade(self):
         return self.grade
     def set_grade(self, new_grade: str):
         self.grade = new_grade
         if self.grade not in ["F", "D" , "U"]:
-            self._has_passed = True
+            self.has_passed = True
         else:
-            self._has_passed = False
+            self.has_passed = False
 # Major represents a students major by containing a list of Requirements and allows to add Requirements, get Requirements and set Grade in a Requirement.
 class Major:
     def __init__(self, major_name: str):
@@ -21,7 +21,7 @@ class Major:
         self.requirements.extend(requirement)
     def get_requirements(self):
         return self.requirements
-    def set_requirement_grade(self, requirement_name: str, grade: str): # Searches for requirement name in list and sets grade
+    def set_requirement_grade(self, requirement_name: str, grade: str):
         for requirement in self.requirements:
             if requirement.requirement_name == requirement_name:
                 requirement.set_grade(grade)
@@ -82,7 +82,7 @@ class Degree_Audit:
         num_of_requirements = len(self.requirements)
         counter = 0
         for requirement in self.requirements:
-            if requirement.get_grade() in ['A','B','C']:
+            if requirement.has_passed == True:
                 counter +=1
         return (counter/num_of_requirements)*100
     def __str__(self):
@@ -95,4 +95,5 @@ mnsu_Student.major.set_requirement_grade("Data Structures", 'B')
 mnsu_Student.major.set_requirement_grade("Calculus II", 'A')
 mnsu_Student.major.set_requirement_grade("Discrete for Comp Sci I", 'F')
 mnsu_Student.major.set_requirement_grade("Linear Algebra I", 'D')
+
 print(Degree_Audit(mnsu_Student))
