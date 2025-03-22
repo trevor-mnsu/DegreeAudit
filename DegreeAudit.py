@@ -1,4 +1,4 @@
-# A Requirement represents a class including name, grade, and if they have passed
+# A Requirement represents a class including name, grade, and if they have passed.
 class Requirement:
     def __init__(self, requirement_name: str):
         self.requirement_name = requirement_name
@@ -6,15 +6,13 @@ class Requirement:
         self._has_passed = False
     def get_grade(self):
         return self.grade
-    def has_passed(self):
-        return self._has_passed
     def set_grade(self, new_grade: str):
         self.grade = new_grade
         if self.grade not in ["F", "D" , "U"]:
             self._has_passed = True
         else:
             self._has_passed = False
-# Major is a list of Requirements which includes adding Redquirements, getting Requirements and searching through the list to set grades.
+# Major represents a students major by containing a list of Requirements and allows to add Requirements, get Requirements and set Grade in a Requirement.
 class Major:
     def __init__(self, major_name: str):
         self.major_name = major_name
@@ -27,9 +25,10 @@ class Major:
         for requirement in self.requirements:
             if requirement.requirement_name == requirement_name:
                 requirement.set_grade(grade)
-                return f"Grade for {requirement_name} has been updated to {grade}"
-        return f"Requirement {requirement_name} not found"
-# Computer Science Class inherits from Major Class includes a list of Requirements
+                break
+        else:
+            print(f"Requirement {requirement_name} not found")
+# Computer Science Class inherits from Major Class, it includes a list of Requirements added to the Major.
 class Computer_Science(Major):
     def __init__(self):
         super().__init__("Computer Science")
@@ -54,7 +53,7 @@ class Computer_Science(Major):
         CS492W = Requirement("Computer Science Capstone 2") 
         CS498W = Requirement("Senior Thesis")
         self.add_requirements([CIS121, CIS122, CIS223, CIS224, CS301, CS302, CS303, CS304, CS391W, CS392W, CS491W, CS495, MATH122, MATH247, MATH280, MATH354, MATH380, CS492W, CS498W])
-# Student Class that includes students name, Tech ID, and Major
+# Student Class stores a name, Tech ID, and Major, and allows to declare a major.
 class Student:
     def __init__(self, first_name: str, last_name: str, tech_id: str):
         self.first_name = first_name
@@ -64,8 +63,8 @@ class Student:
     def declare_major(self, new_major: Major):
         self.major = new_major
     def __str__(self):
-        return f"{self.first_name} {self.last_name} Tech ID : {self.tech_id} Major: {self.major.major_name}"   
-# Degree Audit Class takes in a student and can calculate gpa and percent complete through major
+        return f"{self.first_name} {self.last_name}\nTech ID : {self.tech_id}\nMajor: {self.major.major_name}"   
+# Degree Audit Class evaluates a student by calculating gpa and percent complete through major.
 class Degree_Audit:
     def __init__(self, student: Student):
         self.student = student
@@ -87,11 +86,13 @@ class Degree_Audit:
                 counter +=1
         return (counter/num_of_requirements)*100
     def __str__(self):
-        return f"GPA: {self.get_gpa()}\n{self.percent_complete():.2f}% Requirements Complete"   
-
-mnsu_Student = Student("Trevor", "Cloutier", "012345678910")
+        return f"{self.student}\nGPA: {self.get_gpa()}\nRequirements Complete: {self.percent_complete():.2f}%"   
+# Test 
+mnsu_Student = Student("John", "Doe", "012345678910")
 mnsu_Student.declare_major(Computer_Science())
-mnsu_Student.major.set_requirement_grade("Intro To Programming", 'B')
-mnsu_Student.major.set_requirement_grade("Data Structures", 'C')
-print(mnsu_Student)
+mnsu_Student.major.set_requirement_grade("Intro To Programming", 'A')
+mnsu_Student.major.set_requirement_grade("Data Structures", 'B')
+mnsu_Student.major.set_requirement_grade("Calculus II", 'A')
+mnsu_Student.major.set_requirement_grade("Discrete for Comp Sci I", 'F')
+mnsu_Student.major.set_requirement_grade("Linear Algebra I", 'D')
 print(Degree_Audit(mnsu_Student))
